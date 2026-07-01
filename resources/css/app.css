@@ -1,0 +1,165 @@
+/* Swiper (hero slider) — core + modul navigation & pagination (Requirement 35) */
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+
+/* Anti-FOUC: hide x-cloak elements before bundled CSS loads */
+[x-cloak] {
+    display: none !important;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* Default: sky (biru muda) */
+        --brand-50: 240 249 255;
+        --brand-100: 224 242 254;
+        --brand-200: 186 230 253;
+        --brand-300: 125 211 252;
+        --brand-400: 56 189 248;
+        --brand-500: 14 165 233;
+        --brand-600: 2 132 199;
+        --brand-700: 3 105 161;
+        --brand-800: 7 89 133;
+        --brand-900: 12 74 110;
+        --brand-950: 8 47 73;
+    }
+
+    :focus-visible {
+        @apply outline-none ring-2 ring-brand-500 ring-offset-2;
+    }
+
+    body {
+        @apply bg-slate-50 text-slate-800 antialiased;
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    }
+
+    img {
+        @apply max-w-full h-auto;
+    }
+}
+
+@layer components {
+    .container-page {
+        @apply container mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-5 py-2.5 font-semibold text-white shadow-sm transition duration-200 hover:bg-brand-700 hover:shadow-md active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2;
+    }
+
+    .btn-white {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 font-semibold text-brand-700 shadow-sm ring-1 ring-slate-900/5 transition duration-200 hover:bg-brand-50 hover:shadow-md active:scale-[0.98];
+    }
+
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-5 py-2.5 font-semibold text-white backdrop-blur-sm transition duration-200 hover:bg-white/20 active:scale-[0.98];
+    }
+
+    .btn-outline-brand {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-brand-200 bg-white px-5 py-2.5 font-semibold text-brand-700 transition duration-200 hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98];
+    }
+
+    .btn-ghost {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 font-semibold text-slate-700 transition duration-200 hover:bg-slate-100 hover:text-brand-700 active:scale-[0.98];
+    }
+
+    .btn-sm {
+        @apply px-3.5 py-2 text-sm rounded-lg;
+    }
+
+    .badge {
+        @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold;
+    }
+
+    .badge-emerald { @apply badge bg-brand-100 text-brand-800; }
+    .badge-amber   { @apply badge bg-amber-100 text-amber-800; }
+    .badge-sky     { @apply badge bg-sky-100 text-sky-800; }
+    .badge-rose    { @apply badge bg-rose-100 text-rose-700; }
+
+    .card {
+        @apply bg-white border border-slate-200/70 rounded-2xl shadow-soft;
+    }
+
+    .card-hover {
+        @apply card transition hover:-translate-y-0.5 hover:shadow-premium;
+    }
+
+    .section-heading {
+        @apply text-2xl md:text-3xl font-bold text-slate-900 tracking-tight;
+    }
+
+    .section-eyebrow {
+        @apply text-xs font-bold uppercase tracking-widest text-brand-700;
+    }
+
+    .prose-rsud {
+        @apply prose prose-slate max-w-none prose-headings:font-display prose-a:text-brand-700;
+
+        figure a {
+            @apply pointer-events-none no-underline;
+        }
+
+        figcaption {
+            @apply text-xs text-slate-400 mt-1 text-center not-italic;
+        }
+    }
+
+    .deco-dots {
+        background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+        background-size: 16px 16px;
+    }
+
+    .ring-on-hover { @apply hover:ring-1 hover:ring-brand-200; }
+
+    /* Hero slider (Swiper) — full-bleed, kontrol & pagination bertema brand (Requirement 35) */
+    .hero-swiper {
+        @apply overflow-hidden;
+    }
+
+    /* Tombol navigasi custom (SVG sendiri, bukan arrow bawaan Swiper) */
+    .hero-nav {
+        @apply absolute top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full
+               bg-white/15 text-white ring-1 ring-white/50 backdrop-blur-md transition duration-200
+               hover:bg-white hover:text-brand-700 hover:ring-white hover:scale-110
+               active:scale-95 md:h-12 md:w-12;
+    }
+
+    .hero-nav--prev { left: 1rem; }
+    .hero-nav--next { right: 1rem; }
+
+    @media (min-width: 768px) {
+        .hero-nav--prev { left: 1.5rem; }
+        .hero-nav--next { right: 1.5rem; }
+    }
+
+    .hero-nav.swiper-button-disabled {
+        @apply opacity-0 pointer-events-none;
+    }
+
+    .hero-swiper .swiper-pagination {
+        bottom: 1.25rem !important;
+    }
+
+    .hero-swiper .swiper-pagination-bullet {
+        @apply bg-white/50 opacity-100 transition-all;
+        width: 9px;
+        height: 9px;
+    }
+
+    .hero-swiper .swiper-pagination-bullet-active {
+        @apply bg-white;
+        width: 30px;
+        border-radius: 9999px;
+    }
+}
+
+@layer utilities {
+    .text-balance { text-wrap: balance; }
+    .text-pretty { text-wrap: pretty; }
+    .scrollbar-hide { scrollbar-width: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+}
