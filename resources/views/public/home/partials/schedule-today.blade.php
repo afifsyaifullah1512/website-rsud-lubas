@@ -22,9 +22,9 @@
         </div>
 
         @if ($todayList->count() > 0)
-            <div class="flex flex-wrap gap-5">
-                @foreach ($todayList->take(8) as $s)
-                    <div class="w-full sm:w-[300px] max-w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                @foreach ($todayList->take(3) as $s)
+                    <div>
                         <a href="{{ route('dokter.show', $s->doctorSlug) }}"
                            class="group flex h-full flex-col rounded-2xl bg-white ring-1 ring-slate-900/5 shadow-soft p-5 transition duration-300 hover:-translate-y-1 hover:shadow-premium hover:ring-brand-200">
                             <div class="flex items-center gap-3">
