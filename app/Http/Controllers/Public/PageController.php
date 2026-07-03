@@ -55,7 +55,13 @@ class PageController extends Controller
             'pageTitle' => $page->title ?: ucfirst(str_replace('-', ' ', $slug)),
             'page' => $page->load('media'),
             'safeBody' => $body,
-            'pdfFiles' => $page->media->filter(fn ($m) => str_starts_with($m->mime ?? '', 'application/pdf'))->sortBy('sort_order')->values(),
+            'pdfFiles' => $page->media->filter(function ($m) {
+                $isPdf = str_starts_with((string) ($m->mime ?? ''), 'application/pdf');
+                if (!$isPdf && $m->mime === null) {
+                    $isPdf = str_ends_with(strtolower($m->path), '.pdf');
+                }
+                return $isPdf;
+            })->sortBy('sort_order')->values(),
         ]);
     }
 }

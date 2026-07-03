@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
 
 class PageResource extends Resource
 {
@@ -62,6 +63,8 @@ class PageResource extends Resource
                         ->required(),
                     Forms\Components\Hidden::make('disk')->default('public'),
                 ])
+                ->mutateRelationshipDataBeforeCreateUsing(fn (array $data): array => self::prepareMediaData($data))
+                ->mutateRelationshipDataBeforeSaveUsing(fn (array $data): array => self::prepareMediaData($data))
                 ->orderColumn('sort_order')
                 ->defaultItems(0)
                 ->addActionLabel('Tambah PDF')
@@ -116,6 +119,29 @@ class PageResource extends Resource
 
         // Bersihkan sisa atribut alt yang berisi nama file acak (opsional, kosmetik).
         return $html;
+    }
+
+    /**
+     * Isi field mime & size dari file yang diupload (Req 20.2).
+     *
+     * @param  array<string,mixed>  $data
+     * @return array<string,mixed>
+     */
+    protected static function prepareMediaData(array $data): array
+    {
+        $disk = is_string($data['disk'] ?? null) ? $data['disk'] : 'public';
+        $path = $data['path'] ?? null;
+
+        if (is_string($path) && $path !== '') {
+            $storage = Storage::disk($disk);
+            if ($storage->exists($path)) {
+                $mime = $storage->mimeType($path);
+                $data['mime'] = $mime !== false ? $mime : null;
+                $data['size'] = $storage->size($path);
+            }
+        }
+
+        return $data;
     }
 
     public static function getPages(): array
