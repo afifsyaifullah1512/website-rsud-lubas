@@ -23,17 +23,23 @@
 
         @if ($todayList->count() > 0)
             <div class="relative" x-data="{
-                scroll(el, dir) {
-                    el.scrollBy({ left: el.offsetWidth * 0.8 * dir, behavior: 'smooth' });
-                }
+                dragging: false, startX: 0, scrollLeft: 0,
+                dragStart(e) {
+                    this.dragging = true; this.startX = e.pageX; this.scrollLeft = e.target.scrollLeft;
+                },
+                dragMove(e) {
+                    if (!this.dragging) return;
+                    e.preventDefault();
+                    e.target.scrollLeft = this.scrollLeft - (e.pageX - this.startX);
+                },
+                dragEnd() { this.dragging = false; }
             }">
-                <button @click="scroll($refs.scroller, -1)" aria-label="Scroll kiri"
-                        class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-slate-200 hover:bg-brand-50 transition-colors">
-                    <svg class="h-5 w-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-
                 <div x-ref="scroller"
-                     class="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide"
+                     @mousedown="dragStart($event)"
+                     @mousemove="dragMove($event)"
+                     @mouseup="dragEnd"
+                     @mouseleave="dragEnd"
+                     class="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory cursor-grab active:cursor-grabbing"
                      style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
                     @foreach ($todayList as $s)
                         <div class="snap-start shrink-0 w-[280px] sm:w-[320px]">
@@ -75,11 +81,6 @@
                         </div>
                     @endforeach
                 </div>
-
-                <button @click="scroll($refs.scroller, 1)" aria-label="Scroll kanan"
-                        class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-slate-200 hover:bg-brand-50 transition-colors">
-                    <svg class="h-5 w-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                </button>
             </div>
         @else
             <div class="rounded-2xl bg-white ring-1 ring-slate-900/5 p-10 text-center text-slate-500 shadow-soft">
