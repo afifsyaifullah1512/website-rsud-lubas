@@ -60,6 +60,7 @@ class PageResource extends Resource
                         ->downloadable()
                         ->previewable(false)
                         ->required(),
+                    Forms\Components\Hidden::make('disk')->default('public'),
                 ])
                 ->orderColumn('sort_order')
                 ->defaultItems(0)
