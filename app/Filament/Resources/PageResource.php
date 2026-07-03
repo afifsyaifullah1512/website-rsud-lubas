@@ -65,7 +65,7 @@ class PageResource extends Resource
                 ->defaultItems(0)
                 ->addActionLabel('Tambah PDF')
                 ->collapsible()
-                ->itemLabel(fn (array $state): ?string => $state['path'] ? basename($state['path']) : null),
+                ->itemLabel(fn (array $state): ?string => empty($state['path']) ? null : basename(is_array($state['path']) ? (string) reset($state['path']) : (string) $state['path'])),
         ]);
     }
 
