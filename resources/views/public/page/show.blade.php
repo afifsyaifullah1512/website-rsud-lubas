@@ -6,30 +6,32 @@
     'breadcrumbs' => [[$page->title ?: $pageTitle, null]],
 ])
 
-<section class="container-page py-10 max-w-4xl">
+<section class="container-page py-12 max-w-4xl">
     <article class="prose-rsud">
         {!! $safeBody !!}
     </article>
+</section>
 
-    @if ($pdfFiles->isNotEmpty())
-        <div class="mt-12 border-t border-slate-100 pt-10">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="h-8 w-1.5 rounded-full bg-brand-600"></div>
-                <h2 class="text-lg font-bold text-slate-800">Dokumen Terlampir</h2>
-                <span class="text-xs text-slate-400 font-medium ml-1">{{ $pdfFiles->count() }} file</span>
+@if ($pdfFiles->isNotEmpty())
+    <section class="bg-slate-50/60 border-y border-slate-200">
+        <div class="container-page py-10 max-w-4xl">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-7 w-1 rounded-full bg-brand-600"></div>
+                <h2 class="text-base font-bold text-slate-800">Dokumen Terlampir</h2>
+                <span class="text-xs text-slate-400 font-medium">{{ $pdfFiles->count() }} file</span>
             </div>
-            <div class="grid gap-6">
+            <div class="grid gap-5">
                 @foreach ($pdfFiles as $pdf)
                     <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
                         <div class="px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
                             <div class="flex items-center gap-3 min-w-0">
-                                <div class="h-10 w-10 rounded-xl bg-rose-50 flex items-center justify-center shrink-0">
-                                    <svg class="h-5 w-5 text-rose-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                <div class="h-9 w-9 rounded-xl bg-rose-50 flex items-center justify-center shrink-0">
+                                    <svg class="h-4.5 w-4.5 text-rose-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
                                 </div>
                                 <div class="min-w-0">
                                     <p class="text-sm font-semibold text-slate-700 truncate">{{ basename($pdf->path) }}</p>
                                     @if ($pdf->size)
-                                        <p class="text-xs text-slate-400">{{ number_format($pdf->size / 1024) }} KB</p>
+                                        <p class="text-xs text-slate-400">{{ number_format($pdf->size / 1024, 0) }} KB</p>
                                     @endif
                                 </div>
                             </div>
@@ -57,8 +59,8 @@
                 @endforeach
             </div>
         </div>
-    @endif
-</section>
+    </section>
+@endif
 
 @if ($pdfFiles->isNotEmpty())
     @push('head')
