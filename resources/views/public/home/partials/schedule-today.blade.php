@@ -22,46 +22,64 @@
         </div>
 
         @if ($todayList->count() > 0)
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                @foreach ($todayList->take(3) as $s)
-                    <div>
-                        <a href="{{ route('dokter.show', $s->doctorSlug) }}"
-                           class="group flex h-full flex-col rounded-2xl bg-white ring-1 ring-slate-900/5 shadow-soft p-5 transition duration-300 hover:-translate-y-1 hover:shadow-premium hover:ring-brand-200">
-                            <div class="flex items-center gap-3">
-                                @if ($s->doctorPhotoUrl)
-                                    <img src="{{ $s->doctorPhotoUrl }}" alt="{{ $s->doctorName }}" loading="lazy"
-                                         class="h-14 w-14 rounded-xl object-cover bg-brand-50 ring-1 ring-slate-200 shrink-0">
-                                @else
-                                    <div class="h-14 w-14 rounded-xl bg-brand-50 text-brand-700 grid place-items-center font-display text-xl font-bold ring-1 ring-brand-100 shrink-0">
-                                        {{ \Illuminate\Support\Str::of($s->doctorName)->replaceMatches('/^(dr\.?|drg\.?)\s*/i', '')->substr(0, 1)->upper() }}
+            <div class="relative" x-data="{
+                scroll(el, dir) {
+                    el.scrollBy({ left: el.offsetWidth * 0.8 * dir, behavior: 'smooth' });
+                }
+            }">
+                <button @click="scroll($refs.scroller, -1)" aria-label="Scroll kiri"
+                        class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-slate-200 hover:bg-brand-50 transition-colors">
+                    <svg class="h-5 w-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+
+                <div x-ref="scroller"
+                     class="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide"
+                     style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
+                    @foreach ($todayList as $s)
+                        <div class="snap-start shrink-0 w-[280px] sm:w-[320px]">
+                            <a href="{{ route('dokter.show', $s->doctorSlug) }}"
+                               class="group flex h-full flex-col rounded-2xl bg-white ring-1 ring-slate-900/5 shadow-soft p-5 transition duration-300 hover:-translate-y-1 hover:shadow-premium hover:ring-brand-200">
+                                <div class="flex items-center gap-3">
+                                    @if ($s->doctorPhotoUrl)
+                                        <img src="{{ $s->doctorPhotoUrl }}" alt="{{ $s->doctorName }}" loading="lazy"
+                                             class="h-14 w-14 rounded-xl object-cover bg-brand-50 ring-1 ring-slate-200 shrink-0">
+                                    @else
+                                        <div class="h-14 w-14 rounded-xl bg-brand-50 text-brand-700 grid place-items-center font-display text-xl font-bold ring-1 ring-brand-100 shrink-0">
+                                            {{ \Illuminate\Support\Str::of($s->doctorName)->replaceMatches('/^(dr\.?|drg\.?)\s*/i', '')->substr(0, 1)->upper() }}
+                                        </div>
+                                    @endif
+                                    <div class="min-w-0">
+                                        <h3 class="font-display font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-brand-700 transition">{{ $s->doctorName }}</h3>
+                                        <p class="mt-0.5 text-xs text-slate-500 line-clamp-1">{{ $s->doctorSpecialization }}</p>
                                     </div>
-                                @endif
-                                <div class="min-w-0">
-                                    <h3 class="font-display font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-brand-700 transition">{{ $s->doctorName }}</h3>
-                                    <p class="mt-0.5 text-xs text-slate-500 line-clamp-1">{{ $s->doctorSpecialization }}</p>
                                 </div>
-                            </div>
 
-                            <div class="mt-3">
-                                <span class="inline-flex items-center gap-1 rounded-full bg-brand-50 text-brand-700 px-2.5 py-1 text-[11px] font-medium">
-                                        <iconify-icon icon="ph:hospital-duotone" class="text-sm"></iconify-icon>
-                                    {{ $s->polyclinicName }}
-                                </span>
-                            </div>
+                                <div class="mt-3">
+                                    <span class="inline-flex items-center gap-1 rounded-full bg-brand-50 text-brand-700 px-2.5 py-1 text-[11px] font-medium">
+                                            <iconify-icon icon="ph:hospital-duotone" class="text-sm"></iconify-icon>
+                                        {{ $s->polyclinicName }}
+                                    </span>
+                                </div>
 
-                            <div class="mt-auto flex items-center justify-between border-t border-slate-100 pt-3 mt-4">
-                                <span class="inline-flex items-center gap-1 text-sm font-semibold tabular-nums text-slate-700">
-                                        <iconify-icon icon="ph:clock-duotone" class="text-base text-brand-600"></iconify-icon>
-                                    {{ $s->startTime }}–{{ $s->endTime }}
-                                </span>
-                                <span class="text-xs font-semibold text-brand-700 inline-flex items-center gap-1">
-                                    Profil
-                                    <svg class="h-3.5 w-3.5 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
+                                <div class="mt-auto flex items-center justify-between border-t border-slate-100 pt-3 mt-4">
+                                    <span class="inline-flex items-center gap-1 text-sm font-semibold tabular-nums text-slate-700">
+                                            <iconify-icon icon="ph:clock-duotone" class="text-base text-brand-600"></iconify-icon>
+                                        {{ $s->startTime }}–{{ $s->endTime }}
+                                    </span>
+                                    <span class="text-xs font-semibold text-brand-700 inline-flex items-center gap-1">
+                                        Profil
+                                        <svg class="h-3.5 w-3.5 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+
+                <button @click="scroll($refs.scroller, 1)" aria-label="Scroll kanan"
+                        class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-slate-200 hover:bg-brand-50 transition-colors">
+                    <svg class="h-5 w-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
             </div>
         @else
             <div class="rounded-2xl bg-white ring-1 ring-slate-900/5 p-10 text-center text-slate-500 shadow-soft">
@@ -76,3 +94,9 @@
         </div>
     </div>
 </section>
+
+@push('head')
+<style>
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+</style>
+@endpush
