@@ -144,6 +144,7 @@ class SiteSettingPage extends Page implements HasForms
                     Forms\Components\Select::make('theme_color')
                         ->label('Warna Tema')
                         ->options([
+                            'kemenkes' => '🏥 Hijau Kemenkes',
                             'emerald' => '🟢 Hijau (Emerald)',
                             'blue' => '🔵 Biru',
                             'sky' => '🩵 Biru Langit',
@@ -156,7 +157,7 @@ class SiteSettingPage extends Page implements HasForms
                             'red' => '🔴 Merah',
                             'slate' => '⚫ Slate',
                         ])
-                        ->default('sky')
+                        ->default('kemenkes')
                         ->helperText('Warna utama yang diterapkan di seluruh situs dan panel admin.'),
                 ])->columns(1),
 
