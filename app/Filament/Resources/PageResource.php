@@ -47,6 +47,25 @@ class PageResource extends Resource
                 ->fileAttachmentsDisk('public')
                 ->fileAttachmentsDirectory('pages')
                 ->fileAttachmentsVisibility('public'),
+
+            Forms\Components\Repeater::make('media')
+                ->relationship('media')
+                ->schema([
+                    Forms\Components\FileUpload::make('path')
+                        ->label('File PDF')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->maxSize(20480)
+                        ->disk('public')
+                        ->directory('pages/pdf')
+                        ->downloadable()
+                        ->previewable(false)
+                        ->required(),
+                ])
+                ->orderColumn('sort_order')
+                ->defaultItems(0)
+                ->addActionLabel('Tambah PDF')
+                ->collapsible()
+                ->itemLabel(fn (array $state): ?string => $state['path'] ? basename($state['path']) : null),
         ]);
     }
 

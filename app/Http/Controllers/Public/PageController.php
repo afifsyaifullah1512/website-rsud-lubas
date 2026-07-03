@@ -53,8 +53,9 @@ class PageController extends Controller
 
         return view('public.page.show', [
             'pageTitle' => $page->title ?: ucfirst(str_replace('-', ' ', $slug)),
-            'page' => $page,
+            'page' => $page->load('media'),
             'safeBody' => $body,
+            'pdfFiles' => $page->media->filter(fn ($m) => str_starts_with($m->mime ?? '', 'application/pdf'))->sortBy('sort_order')->values(),
         ]);
     }
 }

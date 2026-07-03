@@ -68,7 +68,7 @@
 @endphp
 
 {{-- Top bar: kontak ringkas, jam layanan, IGD 24 jam, quick links + sosial (Req 1.8) --}}
-<div class="hidden md:block bg-brand-900 text-brand-50 text-xs">
+<div class="hidden md:block bg-gradient-to-br from-brand-800 via-brand-800 to-brand-950 text-brand-50 text-xs">
     <div class="container-page py-2 flex items-center justify-between gap-4">
         <div class="flex items-center gap-5 min-w-0">
             {{-- IGD 24 Jam — kontak gawat darurat, paling kiri (bisa dinonaktifkan) --}}
@@ -136,24 +136,24 @@
     @scroll.window="scrolled = window.scrollY > 8"
     :class="scrolled ? 'shadow-lg shadow-slate-900/5' : ''">
     <div class="container-page">
-        <div class="flex items-center justify-between h-16 lg:h-20">
-            <a href="{{ route('home') }}" class="flex items-center gap-3">
+        <div class="flex items-center justify-between h-16 lg:h-20 gap-4">
+            <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0">
                 @if ($logo)
-                    <img src="{{ str_starts_with($logo, 'http') ? $logo : asset('storage/'.$logo) }}" alt="{{ $rsName }}" class="h-14 w-14 object-contain">
+                    <img src="{{ str_starts_with($logo, 'http') ? $logo : asset('storage/'.$logo) }}" alt="{{ $rsName }}" class="h-12 w-12 lg:h-14 lg:w-14 object-contain">
                 @else
-                    <div class="h-14 w-14 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 text-white grid place-items-center shadow-soft">
-                        <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/><circle cx="12" cy="12" r="10"/></svg>
+                    <div class="h-12 w-12 lg:h-14 lg:w-14 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 text-white grid place-items-center shadow-soft">
+                        <svg class="h-6 w-6 lg:h-7 lg:w-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/><circle cx="12" cy="12" r="10"/></svg>
                     </div>
                 @endif
                 <div class="leading-tight">
-                    <p class="font-display font-bold text-slate-900 text-[15px] sm:text-base">{{ $rsName }}</p>
+                    <p class="font-display font-bold text-slate-900 text-[15px]">{{ $rsName }}</p>
                     @if (trim($headerSubtitle) !== '')
                         <p class="text-[11px] text-slate-500 hidden sm:block">{{ $headerSubtitle }}</p>
                     @endif
                 </div>
             </a>
 
-            <nav class="hidden lg:flex items-center gap-1 text-sm font-semibold text-slate-700">
+            <nav class="hidden lg:flex items-center gap-0.5 text-sm font-semibold text-slate-700">
                 @foreach ($navItems as $item)
                     @php
                         $hasChildren = ! empty($item['children']);
@@ -169,7 +169,7 @@
                             <button
                                 type="button"
                                 @click="open = ! open"
-                                class="relative flex items-center gap-1 px-3 py-2 rounded-md hover:text-brand-700 {{ $active ? 'text-brand-700 after:absolute after:-bottom-0.5 after:left-3 after:right-3 after:h-0.5 after:rounded-full after:bg-brand-600' : '' }}"
+                                class="relative flex items-center gap-0.5 px-2 py-2 rounded-md hover:text-brand-700 {{ $active ? 'text-brand-700 after:absolute after:-bottom-0.5 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:bg-brand-600' : '' }}"
                                 :aria-expanded="open ? 'true' : 'false'">
                                 {{ $item['label'] }}
                                 <svg class="h-4 w-4 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -191,18 +191,17 @@
                     @else
                         <a href="{{ $item['url'] }}"
                            @if ($item['opens_new_tab']) target="_blank" rel="noopener" @endif
-                           class="relative px-3 py-2 rounded-md hover:text-brand-700 {{ $active ? 'text-brand-700 after:absolute after:-bottom-0.5 after:left-3 after:right-3 after:h-0.5 after:rounded-full after:bg-brand-600' : '' }}">
+                           class="relative px-2 py-2 rounded-md hover:text-brand-700 {{ $active ? 'text-brand-700 after:absolute after:-bottom-0.5 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:bg-brand-600' : '' }}">
                             {{ $item['label'] }}
                         </a>
                     @endif
                 @endforeach
             </nav>
 
-            <div class="hidden lg:flex items-center gap-2">
-                <a href="{{ $registrationUrl }}" target="_blank" rel="noopener" class="btn-primary text-sm">
-                    <iconify-icon icon="ph:clipboard-text-duotone" class="text-lg"></iconify-icon>
+            <div class="hidden lg:flex items-center gap-2 shrink-0">
+                <a href="{{ $registrationUrl }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 px-4 py-2 text-sm font-medium text-brand-700 transition hover:bg-brand-100 hover:border-brand-300">
+                    <iconify-icon icon="ph:clipboard-text-duotone" class="text-base"></iconify-icon>
                     Pendaftaran Online
-                    <svg class="h-3.5 w-3.5 opacity-80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M7 7h10v10"/></svg>
                 </a>
             </div>
 
