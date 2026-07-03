@@ -24,16 +24,16 @@
         @if ($todayList->count() > 0)
             <div class="relative" x-data="{
                 dragging: false, startX: 0, scrollLeft: 0,
-                dragStart(e) {
-                    this.dragging = true; this.startX = e.pageX; this.scrollLeft = e.target.scrollLeft;
-                },
-                dragMove(e) {
-                    if (!this.dragging) return;
-                    e.preventDefault();
-                    e.target.scrollLeft = this.scrollLeft - (e.pageX - this.startX);
-                },
+                scroll(el, dir) { el.scrollBy({ left: el.offsetWidth * 0.8 * dir, behavior: 'smooth' }); },
+                dragStart(e) { this.dragging = true; this.startX = e.pageX; this.scrollLeft = e.target.scrollLeft; },
+                dragMove(e) { if (!this.dragging) return; e.preventDefault(); e.target.scrollLeft = this.scrollLeft - (e.pageX - this.startX); },
                 dragEnd() { this.dragging = false; }
             }">
+                <button @click="scroll($refs.scroller, -1)" aria-label="Scroll kiri"
+                        class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-slate-200 hover:bg-brand-50 transition-colors">
+                    <svg class="h-5 w-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+
                 <div x-ref="scroller"
                      @mousedown="dragStart($event)"
                      @mousemove="dragMove($event)"
@@ -53,6 +53,11 @@
                                         <div class="h-14 w-14 rounded-xl bg-brand-50 text-brand-700 grid place-items-center font-display text-xl font-bold ring-1 ring-brand-100 shrink-0">
                                             {{ \Illuminate\Support\Str::of($s->doctorName)->replaceMatches('/^(dr\.?|drg\.?)\s*/i', '')->substr(0, 1)->upper() }}
                                         </div>
+
+                <button @click="scroll($refs.scroller, 1)" aria-label="Scroll kanan"
+                        class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-slate-200 hover:bg-brand-50 transition-colors">
+                    <svg class="h-5 w-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
                                     @endif
                                     <div class="min-w-0">
                                         <h3 class="font-display font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-brand-700 transition">{{ $s->doctorName }}</h3>
