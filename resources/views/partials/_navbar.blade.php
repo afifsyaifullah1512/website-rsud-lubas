@@ -68,7 +68,7 @@
 @endphp
 
 {{-- Top bar: kontak ringkas, jam layanan, IGD 24 jam, quick links + sosial (Req 1.8) --}}
-<div class="hidden md:block bg-gradient-to-br from-brand-800 via-brand-800 to-brand-950 text-brand-50 text-xs">
+<div class="hidden md:block bg-brand-800 text-brand-50 text-xs">
     <div class="container-page py-2 flex items-center justify-between gap-4">
         <div class="flex items-center gap-5 min-w-0">
             {{-- IGD 24 Jam — kontak gawat darurat, paling kiri (bisa dinonaktifkan) --}}
@@ -141,7 +141,7 @@
                 @if ($logo)
                     <img src="{{ str_starts_with($logo, 'http') ? $logo : asset('storage/'.$logo) }}" alt="{{ $rsName }}" class="h-12 w-12 lg:h-14 lg:w-14 object-contain">
                 @else
-                    <div class="h-12 w-12 lg:h-14 lg:w-14 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 text-white grid place-items-center shadow-soft">
+                    <div class="h-12 w-12 lg:h-14 lg:w-14 rounded-xl bg-brand-600 text-white grid place-items-center shadow-soft">
                         <svg class="h-6 w-6 lg:h-7 lg:w-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/><circle cx="12" cy="12" r="10"/></svg>
                     </div>
                 @endif

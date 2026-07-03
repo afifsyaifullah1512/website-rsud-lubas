@@ -5,7 +5,7 @@
 @endphp
 <section class="bg-white pb-12 md:pb-16">
     <div class="container-page">
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 to-brand-900 px-6 py-10 md:px-12 md:py-12 text-white">
+        <div class="relative overflow-hidden rounded-3xl bg-brand-700 px-6 py-10 md:px-12 md:py-12 text-white">
             <div class="absolute inset-0 opacity-10 deco-dots"></div>
             <div class="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                 <div class="max-w-xl">

@@ -18,7 +18,7 @@
 <footer class="mt-16 text-brand-100">
     {{-- Accent strip warna --}}
     <div class="h-1.5 bg-gradient-to-r from-sky-400 via-emerald-400 to-amber-400"></div>
-    <div class="bg-gradient-to-br from-brand-800 via-brand-800 to-brand-950">
+    <div class="bg-brand-800">
     <div class="container-page py-12 grid gap-10 lg:grid-cols-12">
         <div class="lg:col-span-4">
             <div class="flex items-center gap-3">

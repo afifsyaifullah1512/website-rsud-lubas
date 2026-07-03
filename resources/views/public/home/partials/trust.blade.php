@@ -12,7 +12,7 @@
         ['bg' => 'bg-violet-100', 'txt' => 'text-violet-600'],
     ];
 @endphp
-<section class="bg-gradient-to-b from-white to-brand-50/40 border-y border-brand-100">
+<section class="bg-brand-50/30 border-y border-brand-100">
     <div class="container-page py-10 md:py-12">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-start text-center">
             @foreach ($values as $v)

@@ -54,7 +54,7 @@
             <div id="{{ strtolower($type->value) }}" x-data="rowCarousel()" class="scroll-mt-32">
                 <div class="flex items-end justify-between gap-4 mb-5">
                     <div class="flex items-start gap-3 min-w-0">
-                        <div class="h-12 w-12 rounded-2xl bg-gradient-to-br {{ $tone['grad'] }} {{ $tone['text'] }} grid place-items-center shrink-0 shadow-soft">
+                        <div class="h-12 w-12 rounded-2xl {{ $tone['text'] }} grid place-items-center shrink-0">
                             <iconify-icon icon="{{ $type->iconName() }}" class="text-3xl" aria-hidden="true"></iconify-icon>
                         </div>
                         <div class="min-w-0">

@@ -7,7 +7,7 @@
     $schedSub = $settings->get('home_schedule_subheading', \App\Support\SiteContent::text('home_schedule_subheading'));
     $todayList = collect($todaySchedules ?? []);
 @endphp
-<section class="bg-gradient-to-b from-brand-50/40 to-white border-t border-brand-100">
+<section class="bg-brand-50/30 border-t border-brand-100">
     <div class="container-page py-10 md:py-14">
         <div class="flex items-end justify-between gap-4 mb-8">
             <div>
