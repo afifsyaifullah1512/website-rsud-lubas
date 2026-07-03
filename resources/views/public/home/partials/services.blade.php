@@ -14,7 +14,7 @@
     $svcSub = $settings->get('home_services_subheading', \App\Support\SiteContent::text('home_services_subheading'));
 @endphp
 
-<section class="bg-brand-50/30 py-10 md:py-14">
+<section class="bg-brand-50 py-10 md:py-14">
     <div class="container-page">
         <div class="flex items-end justify-between gap-4 mb-8">
             <div>
