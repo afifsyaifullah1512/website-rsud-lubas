@@ -129,7 +129,7 @@ class DemoSeeder extends Seeder
             'header_subtitle' => '',
             'email' => 'info@rsud-lubas.go.id',
             'operational_hours' => 'Senin–Sabtu 08:00–16:00',
-            'theme_color' => 'sky',
+            'theme_color' => 'emerald',
             'registration_url' => 'https://rsud.agamkab.go.id/apps/RegOnline/',
             'latitude' => -0.291,
             'longitude' => 100.040,
